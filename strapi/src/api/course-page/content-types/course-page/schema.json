@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "course_pages",
+  "info": {
+    "singularName": "course-page",
+    "pluralName": "course-pages",
+    "displayName": "Course Page",
+    "description": "CFA Course Levels I, II, and III"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": ["level-1", "level-2", "level-3"],
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "schedule": {
+      "type": "richtext",
+      "required": true
+    },
+    "register_link": {
+      "type": "string"
+    }
+  }
+}

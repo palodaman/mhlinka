@@ -1,56 +1,52 @@
 import { Metadata } from 'next';
-
-import PageContent from '@/lib/shared/PageContent';
+import Link from 'next/link';
 import fetchContentType from '@/lib/strapi/fetchContentType';
-import { generateMetadataObject } from '@/lib/shared/metadata';
-import ClientSlugHandler from './ClientSlugHandler';
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-
-  const pageData = await fetchContentType(
-    'pages',
-    {
-      filters: {
-        slug: "homepage",
-        locale: params.locale,
-      },
-      populate: "seo.metaImage",
-    },
-    true
-  );
-
-  const seo = pageData?.seo;
-  const metadata = generateMetadataObject(seo);
-  return metadata;
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'CFA Examination Preparation Program',
+    description: 'Professional CFA exam preparation courses for Level I, II, and III',
+  };
 }
 
 export default async function HomePage({ params }: { params: { locale: string } }) {
-
-  const pageData = await fetchContentType(
-    'pages',
-    {
-      filters: {
-        slug: "homepage",
-        locale: params.locale,
-      },
-    },
+  const landingPageData = await fetchContentType(
+    'landing-page',
+    {},
     true
   );
 
-  const localizedSlugs = pageData.localizations?.reduce(
-    (acc: Record<string, string>, localization: any) => {
-      acc[localization.locale] = "";
-      return acc;
-    },
-    { [params.locale]: "" }
-  );
+  if (!landingPageData) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <h1 className="text-3xl font-bold mb-8">Welcome to CFA Examination Preparation Program</h1>
+        <p className="text-lg mb-8">Content is being loaded. Please check back soon.</p>
+      </div>
+    );
+  }
 
-  return <>
-    <ClientSlugHandler localizedSlugs={localizedSlugs} />
-    <PageContent pageData={pageData} />
-  </>;
+  return (
+    <div className="container mx-auto px-4 py-16 max-w-4xl">
+      <div className="prose prose-lg max-w-none">
+        {landingPageData.intro_text && (
+          <BlocksRenderer content={landingPageData.intro_text} />
+        )}
+      </div>
+      
+      {landingPageData.links && landingPageData.links.length > 0 && (
+        <div className="mt-12 space-y-4">
+          {landingPageData.links.map((link: any, index: number) => (
+            <Link
+              key={index}
+              href={link.url_slug}
+              className="block bg-blue-600 text-white text-center py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              {link.title}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }

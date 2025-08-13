@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "fee_structures",
+  "info": {
+    "singularName": "fee-structure",
+    "pluralName": "fee-structures",
+    "displayName": "Fee Structure",
+    "description": "CFA Program Fee Structure"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "payment_methods": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.payment-method"
+    }
+  }
+}

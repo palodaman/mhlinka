@@ -413,6 +413,18 @@ export interface SharedLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedPaymentMethod extends Struct.ComponentSchema {
+  collectionName: 'components_shared_payment_methods';
+  info: {
+    description: 'Payment method options';
+    displayName: 'Payment Method';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedPerks extends Struct.ComponentSchema {
   collectionName: 'components_shared_perks';
   info: {
@@ -422,6 +434,18 @@ export interface SharedPerks extends Struct.ComponentSchema {
   };
   attributes: {
     text: Schema.Attribute.String;
+  };
+}
+
+export interface SharedProgramLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_program_links';
+  info: {
+    description: 'Link to program pages';
+    displayName: 'Program Link';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url_slug: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -534,7 +558,9 @@ declare module '@strapi/strapi' {
       'shared.form': SharedForm;
       'shared.launches': SharedLaunches;
       'shared.link': SharedLink;
+      'shared.payment-method': SharedPaymentMethod;
       'shared.perks': SharedPerks;
+      'shared.program-link': SharedProgramLink;
       'shared.section': SharedSection;
       'shared.seo': SharedSeo;
       'shared.social-media-icon-links': SharedSocialMediaIconLinks;

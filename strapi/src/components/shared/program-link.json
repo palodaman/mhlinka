@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_program_links",
+  "info": {
+    "displayName": "Program Link",
+    "description": "Link to program pages"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url_slug": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
